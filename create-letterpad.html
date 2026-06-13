@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Letterpad</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    .app { max-width: 1400px; margin: 0 auto; padding: 1.5rem; min-height: 100vh; display: flex; flex-direction: column; }
+
+    header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .back-link { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 600; color: #64748b; text-decoration: none; padding: 0.375rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; background: #fff; transition: all 0.15s; }
+    .back-link:hover { color: #0f172a; border-color: #94a3b8; }
+    h1 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
+
+    .main-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; flex: 1; }
+    @media (min-width: 1024px) { .main-grid { grid-template-columns: 360px 1fr; } }
+
+    /* FORM PANEL */
+    .form-panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+    .form-section { }
+    .form-section label { display: block; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; margin-bottom: 0.375rem; }
+
+    .logo-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.375rem; }
+    .logo-opt { padding: 0.5rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; background: #fff; cursor: pointer; text-align: center; transition: all 0.15s; font-size: 0.6875rem; font-weight: 600; color: #475569; }
+    .logo-opt:hover { border-color: #94a3b8; }
+    .logo-opt.active { border-color: #0f172a; background: #f8fafc; color: #0f172a; }
+    .logo-opt svg { display: block; margin: 0 auto 0.25rem; }
+
+    input[type="text"] { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 0.8125rem; color: #0f172a; background: #f8fafc; transition: all 0.15s; font-family: inherit; }
+    input[type="text"]:focus { outline: none; background: #fff; border-color: #0f172a; box-shadow: 0 0 0 1px #0f172a; }
+
+    .color-row { display: flex; align-items: center; gap: 0.75rem; }
+    .color-row input[type="color"] { width: 2.5rem; height: 2.5rem; padding: 0; border: 1px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer; background: #fff; overflow: hidden; }
+    .color-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+    .color-row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0.25rem; }
+    .color-row input[type="text"] { flex: 1; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+
+    .preview-toggle { display: flex; gap: 0.5rem; }
+    .preview-toggle button { flex: 1; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; background: #fff; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.15s; color: #475569; text-align: center; }
+    .preview-toggle button.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+    .preview-toggle button:hover:not(.active) { border-color: #94a3b8; }
+
+    .action-btns { display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; }
+    .btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.625rem 1rem; border-radius: 0.75rem; font-size: 0.8125rem; font-weight: 600; border: none; cursor: pointer; transition: all 0.15s; }
+    .btn-primary { background: #0f172a; color: #fff; }
+    .btn-primary:hover { background: #1e293b; }
+    .btn-accent { background: #2563eb; color: #fff; }
+    .btn-accent:hover { background: #1d4ed8; }
+    .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.7; pointer-events: none; }
+
+    /* PREVIEW PANEL */
+    .preview-panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 1rem; overflow: auto; display: flex; flex-direction: column; align-items: center; padding: 3rem 2rem; position: relative; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+    .zoom-bar { position: absolute; top: 1rem; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 1rem; padding: 0.5rem 1rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 9999px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; }
+    .zoom-btn { width: 1.75rem; height: 1.75rem; display: flex; align-items: center; justify-content: center; border-radius: 9999px; border: none; background: #f1f5f9; color: #475569; cursor: pointer; transition: background 0.15s; }
+    .zoom-btn:hover { background: #e2e8f0; }
+    .zoom-label { font-size: 0.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #334155; width: 3rem; text-align: center; user-select: none; }
+    .zoom-divider { width: 1px; height: 1rem; background: #e2e8f0; }
+    .zoom-fit { padding: 0.25rem 0.625rem; font-size: 0.625rem; font-weight: 700; border-radius: 0.375rem; border: 1px solid #e2e8f0; background: #f1f5f9; color: #334155; cursor: pointer; text-transform: uppercase; transition: all 0.15s; }
+    .zoom-fit:hover { background: #e2e8f0; }
+
+    .preview-wrapper { display: flex; align-items: center; justify-content: center; flex: 1; width: 100%; padding: 4rem 2rem; }
+
+    /* A4 PAGE */
+    .a4-page { width: 210mm; height: 297mm; padding: 24mm; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,0.12); display: flex; flex-direction: column; position: relative; transform-origin: center center; transition: transform 0.3s; color: #000; }
+
+    .letterhead { width: 100%; display: flex; justify-content: space-between; padding-bottom: 1.25rem; border-bottom: 2px solid #e2e8f0; }
+
+    .logo-row { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+    .logo-svg { flex-shrink: 0; }
+    .logo-texts { min-width: 0; }
+    .logo-english { font-family: 'Inter', sans-serif; font-weight: 800; letter-spacing: -0.025em; font-size: 1.125rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .logo-arabic { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; line-height: 1.3; margin-top: 0.125rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: rtl; text-align: right; }
+
+    .empty-letter { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .empty-letter p { font-size: 14px; color: #cbd5e1; letter-spacing: 0.05em; }
+
+    .stamp-area { position: absolute; bottom: 18mm; right: 18mm; z-index: 5; cursor: move; user-select: none; touch-action: none; }
+    .stamp-area .stamp-svg { width: 110px; height: 110px; display: block; pointer-events: none; user-select: none; }
+
+    /* Print */
+    @media print {
+      body { background: #fff !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .no-print { display: none !important; }
+      .app { padding: 0; max-width: none; }
+      .a4-page { position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important; height: 297mm !important; padding: 24mm !important; margin: 0 !important; border: none !important; box-shadow: none !important; background: #fff !important; page-break-after: avoid !important; transform: none !important; }
+      @page { size: A4 portrait; margin: 0 !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <a href="index.html" class="back-link no-print">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to NOC Generator
+    </a>
+    <h1>Create Letterpad</h1>
+  </header>
+
+  <div class="main-grid">
+    <!-- FORM -->
+    <div class="form-panel no-print">
+      <div class="form-section">
+        <label>Logo Style</label>
+        <div class="logo-options" id="logoOptions"></div>
+      </div>
+
+      <div class="form-section">
+        <label>Company Name (English)</label>
+        <input type="text" id="englishName" value="YOUR COMPANY NAME L.L.C" placeholder="e.g. Star Technical Services L.L.C">
+      </div>
+
+      <div class="form-section">
+        <label>Company Name (Arabic)</label>
+        <input type="text" id="arabicName" value="اسم الشركة ذ.م.م" placeholder="سيتم التعبئة تلقائياً">
+      </div>
+
+      <div class="form-section">
+        <label>Brand Color</label>
+        <div class="color-row">
+          <input type="color" id="logoColor" value="#0c4ea3" oninput="syncColor(this.value)">
+          <input type="text" id="logoColorText" value="#0C4EA3" oninput="syncColor(this.value)">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label>Preview Page Lines</label>
+        <div class="preview-toggle">
+          <button class="active" onclick="setShowBody('blank')" id="modeBlank">Blank Page</button>
+          <button onclick="setShowBody('lined')" id="modeLined">With Guidelines</button>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label>Company Stamp</label>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.375rem">
+          <input type="checkbox" id="showStamp" style="width:1rem;height:1rem;cursor:pointer;accent-color:#0f172a">
+          <label for="showStamp" style="font-size:0.75rem;font-weight:600;cursor:pointer;color:#334155;user-select:none">Show Stamp / Signature Seal</label>
+        </div>
+        <input type="text" id="signedBy" value="Authorized Signatory" placeholder="Authorized Signatory" style="margin-top:0.125rem">
+        <div class="color-row" style="margin-top:0.5rem">
+          <input type="color" id="stampColor" value="#1e3a8a" oninput="syncStampColor(this.value)" style="width:2.5rem;height:2.5rem;padding:0;border:1px solid #e2e8f0;border-radius:0.5rem;cursor:pointer;background:#fff;overflow:hidden">
+          <input type="text" id="stampColorText" value="#1E3A8A" oninput="syncStampColor(this.value)" style="flex:1;font-family:'JetBrains Mono',monospace;text-transform:uppercase;padding:0.5rem 0.75rem;border:1px solid #e2e8f0;border-radius:0.5rem;font-size:0.8125rem;color:#0f172a;background:#f8fafc;outline:none">
+        </div>
+      </div>
+
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="handlePreview()" id="previewBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Preview Letterpad
+        </button>
+        <button class="btn btn-primary" onclick="handlePrint()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Letterpad
+        </button>
+        <button class="btn btn-accent" onclick="handleDownloadPdf()" id="downloadBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span id="downloadBtnText">Download A4 PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview-panel" id="previewPanel">
+      <div class="zoom-bar no-print">
+        <button class="zoom-btn" onclick="zoomOut()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <span class="zoom-label" id="zoomLabel">80%</span>
+        <button class="zoom-btn" onclick="zoomIn()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <div class="zoom-divider"></div>
+        <button class="zoom-fit" onclick="resetZoom()">Fit</button>
+      </div>
+
+      <div class="preview-wrapper">
+        <div class="a4-page" id="nocA4Page">
+          <div class="letterhead" id="letterheadSection">
+            <div id="logoContainer"></div>
+          </div>
+          <div class="empty-letter" id="emptyLetterArea">
+            <p id="emptyHint" style="display:none"></p>
+          </div>
+          <div id="stampWrapper" class="stamp-area" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const LOGO_TYPES = ['rana','fjm','summer','hassan','wasique','amal','techgear','brightwash','cleanwave','buildcore','structura','marketpro','sparkclean','electrofix','flowpipe','colorcoat','woodcraft','airtech','greenscape','shieldguard','datanet','swiftlogi','pressprint','royalcater','artspace','proserve','aquawash','taxizone'];
+let selectedType = 'rana';
+let color = '#0c4ea3';
+let stampColor = '#1e3a8a';
+let zoom = 0.8;
+let showBody = 'blank';
+let stampDragX = 0, stampDragY = 0;
+let isDraggingStamp = false;
+let dragStartX = 0, dragStartY = 0, dragOrigX = 0, dragOrigY = 0;
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function renderLogo(type, c, eng, arb) {
+  switch (type) {
+    case 'rana': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="38" stroke="${c}" stroke-width="5" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="30" fill="#f8fafc" stroke="${c}" stroke-width="2"/><path d="M50 32 L50 68 M32 50 L68 50 M37 37 L63 63 M37 63 L63 37" stroke="${c}" stroke-width="1.5" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="${c}"/><circle cx="50" cy="32" r="6" fill="${c}"/><circle cx="50" cy="68" r="6" fill="${c}"/><circle cx="32" cy="50" r="6" fill="${c}"/><circle cx="68" cy="50" r="6" fill="${c}"/><text x="50" y="35" fill="white" font-size="8" font-weight="bold" text-anchor="middle">in</text><text x="32" y="52" fill="white" font-size="7" font-weight="bold" text-anchor="middle">f</text><text x="68" y="52" fill="white" font-size="6" font-weight="bold" text-anchor="middle">t</text><text x="50" y="70" fill="white" font-size="6" font-weight="bold" text-anchor="middle">✉</text></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'fjm': return `<div class="logo-row"><div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0"><svg width="80" height="40" viewBox="0 0 120 60" fill="none"><circle cx="28" cy="22" r="12" stroke="${c}" stroke-width="3"/><path d="M28 10 L28 14 M28 30 L28 34 M18 22 L22 22 M34 22 L38 22 M21 15 L24 18 M35 29 L32 26 M21 29 L24 26 M35 15 L32 18" stroke="${c}" stroke-width="3" stroke-linecap="round"/><text x="25" y="48" fill="${c}" font-size="28" font-weight="900" font-style="italic" letter-spacing="1">FJM</text></svg><span style="font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:-4px;color:${c}">TECHNICAL SERVICES</span></div><div style="border-left:2px solid #fecaca;padding-left:1rem;min-width:0"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'summer': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="25" y="40" width="12" height="42" fill="${c}"/><rect x="42" y="22" width="16" height="60" fill="${c}" opacity="0.8"/><rect x="63" y="32" width="12" height="50" fill="${c}" opacity="0.9"/><line x1="50" y1="22" x2="50" y2="10" stroke="${c}" stroke-width="2"/><line x1="31" y1="40" x2="31" y2="32" stroke="${c}" stroke-width="2"/><rect x="15" y="68" width="70" height="16" fill="${c}" rx="3"/><text x="50" y="80" fill="white" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="4">SC</text></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'hassan': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="34" stroke="${c}" stroke-width="5"/><circle cx="50" cy="50" r="26" stroke="${c}" stroke-width="1" stroke-dasharray="3 3"/><rect x="46" y="8" width="8" height="10" fill="${c}" rx="2"/><rect x="46" y="82" width="8" height="10" fill="${c}" rx="2"/><rect x="8" y="46" width="10" height="8" fill="${c}" rx="2"/><rect x="82" y="46" width="10" height="8" fill="${c}" rx="2"/><line x1="35" y1="50" x2="65" y2="50" stroke="${c}" stroke-width="3"/><line x1="50" y1="35" x2="50" y2="65" stroke="${c}" stroke-width="3"/><circle cx="35" cy="50" r="5" fill="${c}"/><circle cx="65" cy="50" r="5" fill="${c}"/><circle cx="50" cy="35" r="5" fill="${c}"/><circle cx="50" cy="65" r="5" fill="${c}"/><text x="50" y="54" fill="white" font-size="12" font-weight="bold" text-anchor="middle">HI</text></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'wasique': return `<div class="logo-row"><svg class="logo-svg" width="64" height="48" viewBox="0 0 100 70" fill="none"><path d="M10 15 L35 15 L50 45 L65 15 L90 15" stroke="${c}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 45 L75 45" stroke="${c}" stroke-width="5" stroke-linecap="round"/><path d="M40 55 L60 55" stroke="${c}" stroke-width="3" stroke-linecap="round"/><path d="M25 15 L45 42 L65 42 L85 15" stroke="#f1f5f9" stroke-width="2"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'amal': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="30" stroke="${c}" stroke-width="6"/>${[0,45,90,135,180,225,270,315].map(a => `<g transform="rotate(${a} 50 50)"><rect x="46" y="10" width="8" height="12" fill="${c}" rx="1"/></g>`).join('')}<path d="M30 65 L45 50 L55 58 L72 38" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 38 H75 V53" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'techgear': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="32" stroke="${c}" stroke-width="5" stroke-dasharray="8 4"/><circle cx="50" cy="50" r="16" fill="${c}" opacity="0.12"/><circle cx="50" cy="50" r="10" fill="${c}"/><circle cx="50" cy="50" r="5" fill="white"/><circle cx="50" cy="16" r="4" fill="${c}"/><circle cx="50" cy="84" r="4" fill="${c}"/><circle cx="16" cy="50" r="4" fill="${c}"/><circle cx="84" cy="50" r="4" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'brightwash': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="22" y="52" width="56" height="22" rx="5" fill="${c}"/><path d="M30 52 L40 38 L60 38 L70 52" fill="${c}" opacity="0.8"/><circle cx="34" cy="78" r="7" fill="${c}"/><circle cx="66" cy="78" r="7" fill="${c}"/><path d="M48 38 L48 30 M43 34 L53 34" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/><path d="M12 42 Q18 30 12 22" stroke="${c}" stroke-width="2" fill="none" opacity="0.6"/><path d="M18 46 Q24 36 18 28" stroke="${c}" stroke-width="2" fill="none" opacity="0.4"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'cleanwave': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="42" r="26" stroke="${c}" stroke-width="4"/><path d="M32 42 Q38 36 44 42 T56 42 T68 42" stroke="${c}" stroke-width="3" fill="none"/><path d="M32 50 Q38 44 44 50 T56 50 T68 50" stroke="${c}" stroke-width="2" fill="none" opacity="0.5"/><circle cx="46" cy="78" r="6" stroke="${c}" stroke-width="2" fill="none"/><circle cx="58" cy="80" r="4" stroke="${c}" stroke-width="1.5" fill="none"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'buildcore': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="28" y="38" width="44" height="48" fill="${c}" opacity="0.85"/><rect x="32" y="42" width="14" height="16" fill="white" opacity="0.5"/><rect x="54" y="42" width="14" height="16" fill="white" opacity="0.5"/><rect x="32" y="64" width="14" height="16" fill="white" opacity="0.5"/><rect x="54" y="64" width="14" height="16" fill="white" opacity="0.5"/><polygon points="18,42 50,14 82,42" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'structura': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="22" y="32" width="16" height="54" fill="${c}"/><rect x="42" y="18" width="16" height="68" fill="${c}" opacity="0.8"/><rect x="62" y="28" width="16" height="58" fill="${c}" opacity="0.9"/><line x1="12" y1="86" x2="88" y2="86" stroke="${c}" stroke-width="3"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'marketpro': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><path d="M25 70 L25 40 L38 48 L48 30 L62 44 L75 25" stroke="${c}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polygon points="62,30 78,18 68,42" fill="${c}"/><rect x="22" y="72" width="56" height="5" rx="2" fill="${c}" opacity="0.4"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'sparkclean': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="42" r="24" stroke="${c}" stroke-width="4"/><path d="M35 50 L50 30 L58 45 L42 55 Z" fill="${c}" opacity="0.3"/><path d="M50 18 L50 14 M50 66 L50 70 M22 42 L18 42 M78 42 L82 42" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/><text x="50" y="47" fill="${c}" font-size="22" font-weight="bold" text-anchor="middle">✦</text></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'electrofix': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><polygon points="58,10 32,52 48,52 42,90 72,42 56,42" fill="${c}"/><circle cx="50" cy="50" r="34" stroke="${c}" stroke-width="2" fill="none" stroke-dasharray="4 4" opacity="0.4"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'flowpipe': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><path d="M25 30 Q25 15 50 15 Q75 15 75 30 L75 58 Q75 73 50 73 Q25 73 25 58" stroke="${c}" stroke-width="5" fill="none"/><rect x="20" y="58" width="10" height="18" rx="3" fill="${c}"/><rect x="70" y="58" width="10" height="18" rx="3" fill="${c}"/><circle cx="50" cy="82" r="4" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'colorcoat': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="20" y="28" width="60" height="36" rx="3" stroke="${c}" stroke-width="3" fill="none"/><rect x="20" y="28" width="20" height="36" fill="${c}" opacity="0.3"/><rect x="40" y="28" width="20" height="36" fill="${c}" opacity="0.5"/><rect x="60" y="28" width="20" height="36" fill="${c}" opacity="0.7"/><rect x="43" y="68" width="14" height="14" fill="${c}" rx="2"/><rect x="33" y="80" width="34" height="6" fill="${c}" rx="2"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'woodcraft': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><line x1="22" y1="76" x2="78" y2="76" stroke="${c}" stroke-width="4"/><line x1="22" y1="76" x2="50" y2="20" stroke="${c}" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="20" x2="78" y2="76" stroke="${c}" stroke-width="4" stroke-linecap="round"/><path d="M38 55 L62 55 M41 63 L59 63" stroke="${c}" stroke-width="2" opacity="0.5"/><circle cx="50" cy="42" r="3" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'airtech': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="42" r="24" stroke="${c}" stroke-width="4"/><path d="M30 32 Q40 20 50 32 Q60 44 70 32" stroke="${c}" stroke-width="3" fill="none"/><path d="M30 52 Q40 64 50 52 Q60 40 70 52" stroke="${c}" stroke-width="3" fill="none"/><circle cx="50" cy="42" r="6" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'greenscape': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><path d="M50 88 L50 58" stroke="${c}" stroke-width="4"/><path d="M50 58 Q32 42 22 52 Q38 38 50 48 Q62 38 78 52 Q68 42 50 58" fill="${c}"/><rect x="42" y="88" width="16" height="8" rx="2" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'shieldguard': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><path d="M50 6 L90 28 L90 56 Q90 80 50 94 Q10 80 10 56 L10 28 Z" stroke="${c}" stroke-width="4" fill="none"/><path d="M34 52 L46 65 L68 40" stroke="${c}" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'datanet': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="28" r="12" stroke="${c}" stroke-width="3"/><circle cx="22" cy="66" r="10" stroke="${c}" stroke-width="3"/><circle cx="78" cy="66" r="10" stroke="${c}" stroke-width="3"/><line x1="38" y1="36" x2="30" y2="58" stroke="${c}" stroke-width="2.5"/><line x1="62" y1="36" x2="70" y2="58" stroke="${c}" stroke-width="2.5"/><line x1="32" y1="66" x2="68" y2="66" stroke="${c}" stroke-width="2.5"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'swiftlogi': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="18" y="44" width="64" height="28" rx="4" fill="${c}"/><rect x="22" y="36" width="38" height="10" rx="2" fill="${c}" opacity="0.6"/><circle cx="32" cy="78" r="8" fill="${c}"/><circle cx="68" cy="78" r="8" fill="${c}"/><line x1="55" y1="36" x2="55" y2="44" stroke="${c}" stroke-width="2"/><line x1="62" y1="55" x2="74" y2="55" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="66" y1="50" x2="66" y2="60" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'pressprint': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="24" y="34" width="52" height="34" rx="3" fill="${c}"/><rect x="30" y="40" width="40" height="10" fill="white" opacity="0.5"/><rect x="30" y="54" width="40" height="8" fill="white" opacity="0.5"/><rect x="34" y="68" width="32" height="14" fill="${c}" opacity="0.7"/><rect x="34" y="28" width="32" height="6" rx="2" stroke="${c}" stroke-width="2" fill="none"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'royalcater': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><ellipse cx="50" cy="52" rx="32" ry="18" stroke="${c}" stroke-width="4" fill="none"/><path d="M28 68 Q50 80 72 68" stroke="${c}" stroke-width="3" fill="none"/><path d="M50 16 L50 34 M38 22 L62 22" stroke="${c}" stroke-width="4" stroke-linecap="round"/><path d="M38 34 Q50 42 62 34" stroke="${c}" stroke-width="2" fill="none"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'artspace': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="32" stroke="${c}" stroke-width="3" fill="none"/><circle cx="50" cy="50" r="24" stroke="${c}" stroke-width="1" fill="none" stroke-dasharray="4 4"/><path d="M50 18 L50 82 M18 50 L82 50" stroke="${c}" stroke-width="2"/><path d="M34 34 L66 66 M34 66 L66 34" stroke="${c}" stroke-width="1.5" opacity="0.5"/><circle cx="50" cy="50" r="5" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'proserve': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="26" stroke="${c}" stroke-width="4" stroke-dasharray="6 3"/><path d="M36 38 L64 62 M36 62 L64 38" stroke="${c}" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="50" r="4" fill="${c}"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'aquawash': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="22" y="46" width="56" height="28" rx="5" fill="${c}"/><path d="M30 46 L42 30 L58 30 L70 46" fill="${c}" opacity="0.75"/><circle cx="34" cy="78" r="7" fill="${c}"/><circle cx="66" cy="78" r="7" fill="${c}"/><path d="M12 30 Q18 18 12 10" stroke="${c}" stroke-width="2" fill="none" opacity="0.5"/><circle cx="8" cy="32" r="2.5" fill="${c}" opacity="0.4"/><circle cx="14" cy="24" r="2" fill="${c}" opacity="0.4"/><circle cx="6" cy="22" r="1.5" fill="${c}" opacity="0.4"/></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+    case 'taxizone': return `<div class="logo-row"><svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none"><rect x="18" y="44" width="64" height="28" rx="6" fill="${c}"/><path d="M28 44 L38 28 L62 28 L72 44" fill="${c}" opacity="0.8"/><circle cx="32" cy="76" r="8" fill="${c}"/><circle cx="68" cy="76" r="8" fill="${c}"/><rect x="30" y="38" width="40" height="6" fill="${c}" opacity="0.9" rx="1"/><rect x="50" y="34" width="6" height="10" fill="${c}" opacity="0.9"/><rect x="25" y="55" width="14" height="6" fill="#f8fafc" opacity="0.7" rx="1"/><rect x="40" y="55" width="20" height="6" fill="#f8fafc" opacity="0.7" rx="1"/><rect x="61" y="55" width="14" height="6" fill="#f8fafc" opacity="0.7" rx="1"/><text x="50" y="50" fill="#f8fafc" font-size="7" font-weight="bold" text-anchor="middle" opacity="0.9">TAXI</text></svg><div class="logo-texts"><div class="logo-english" style="color:${c}">${esc(eng)}</div><div class="logo-arabic" style="color:${c}">${esc(arb)}</div></div></div>`;
+  }
+}
+
+const LOGO_LABELS = { rana:'Rana', fjm:'FJM', summer:'Summer', hassan:'Hassan', wasique:'Wasique', amal:'Amal', techgear:'TechGear', brightwash:'BrightWash', cleanwave:'CleanWave', buildcore:'BuildCore', structura:'Structura', marketpro:'MarketPro', sparkclean:'SparkClean', electrofix:'ElectroFix', flowpipe:'FlowPipe', colorcoat:'ColorCoat', woodcraft:'WoodCraft', airtech:'AirTech', greenscape:'GreenScape', shieldguard:'ShieldGuard', datanet:'DataNet', swiftlogi:'SwiftLogi', pressprint:'PressPrint', royalcater:'RoyalCater', artspace:'ArtSpace', proserve:'ProServe', aquawash:'AquaWash', taxizone:'TaxiZone' };
+const LOGO_COLORS = { rana:'#0c4ea3', fjm:'#c51b23', summer:'#0a6395', hassan:'#0284c7', wasique:'#086da3', amal:'#cc2128', techgear:'#2563eb', brightwash:'#0891b2', cleanwave:'#7c3aed', buildcore:'#d97706', structura:'#059669', marketpro:'#dc2626', sparkclean:'#0ea5e9', electrofix:'#ca8a04', flowpipe:'#0284c7', colorcoat:'#ea580c', woodcraft:'#65a30d', airtech:'#0369a1', greenscape:'#16a34a', shieldguard:'#4f46e5', datanet:'#0d9488', swiftlogi:'#e11d48', pressprint:'#9333ea', royalcater:'#db2777', artspace:'#c026d3', proserve:'#475569', aquawash:'#0284c7', taxizone:'#dc2626' };
+const LOGO_ENGS = { rana:'RANA For Marketing Services Via Social', fjm:'F J M Technical Services', summer:'SUMMER CITY BUILDING CONTRACTING L.L.C', hassan:'Hassan Ishtiaq Technical Services L.L.C', wasique:'WASIQUE ZAHIR TECHNICAL WORKS L.L.C', amal:'AMAL JANNAT TECHNICAL SERVICES EST.', techgear:'TechGear Technical Services L.L.C', brightwash:'BrightWash Car Wash L.L.C', cleanwave:'CleanWave Dry Cleaning L.L.C', buildcore:'BuildCore Construction L.L.C', structura:'Structura Building Services L.L.C', marketpro:'MarketPro Marketing L.L.C', sparkclean:'SparkClean Cleaning Services L.L.C', electrofix:'ElectroFix Electrical Services L.L.C', flowpipe:'FlowPipe Plumbing Services L.L.C', colorcoat:'ColorCoat Painting Services L.L.C', woodcraft:'WoodCraft Carpentry Works L.L.C', airtech:'AirTech HVAC Services L.L.C', greenscape:'GreenScape Landscaping L.L.C', shieldguard:'ShieldGuard Security Services L.L.C', datanet:'DataNet Information Technology L.L.C', swiftlogi:'SwiftLogi Logistics Services L.L.C', pressprint:'PressPrint Printing Press L.L.C', royalcater:'RoyalCater Catering Services L.L.C', artspace:'ArtSpace Interior Design L.L.C', proserve:'ProServe Maintenance Services L.L.C', aquawash:'AquaWash Car Wash L.L.C', taxizone:'TaxiZone Transport Services L.L.C' };
+const LOGO_ARBS = { rana:'ران الخدمات التسويق عبر مواقع التواصل', fjm:'اف جيه ام للخدمات الفنية', summer:'سمر سيتي لمقات البناء ش.ذ.م.م', hassan:'حسن اشتياق للخدمات الفنية ذ.م.م', wasique:'واثق زهير للاعمال الفنية ش.ذ.م.م', amal:'مؤسسة امل جنات للخدمات الفنية', techgear:'تك جير للخدمات الفنية ذ.م.م', brightwash:'برايت واش لغسيل السيارات ذ.م.م', cleanwave:'كلين ويف للتنظيف الجاف ذ.م.م', buildcore:'بلد كور للمقاولات ذ.م.م', structura:'ستريكتشر للخدمات العمرانية ذ.م.م', marketpro:'ماركت برو للتسويق ذ.م.م', sparkclean:'سبارك كلين للتنظيف ذ.م.م', electrofix:'إلكترو فيكس للكهرباء ذ.م.م', flowpipe:'فلو بايب للسباكة ذ.م.م', colorcoat:'كولر كوت للدهانات ذ.م.م', woodcraft:'وود كرافت للنجارة ذ.م.م', airtech:'إير تك للتكييف ذ.م.م', greenscape:'غرين سكيب لتنسيق الحدائق ذ.م.م', shieldguard:'شيلد جارد للأمن ذ.م.م', datanet:'داتا نت لتقنية المعلومات ذ.م.م', swiftlogi:'سويفت لوجي للنقل ذ.م.م', pressprint:'برس برنت للطباعة ذ.م.م', royalcater:'رويال كيتر للتموين ذ.م.م', artspace:'آرت سبيس للتصميم الداخلي ذ.م.م', proserve:'برو سيرف للصيانة ذ.م.م', aquawash:'أكوا واش لغسيل السيارات ذ.م.م', taxizone:'تاكسي زون لخدمات النقل ذ.م.م' };
+
+function init() {
+  const container = document.getElementById('logoOptions');
+  container.innerHTML = LOGO_TYPES.map(t => {
+    const svgSize = 28;
+    let inner = '';
+    switch(t) {
+      case 'rana': inner = '<circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="14" cy="14" r="3" fill="currentColor"/>'; break;
+      case 'fjm': inner = '<text x="14" y="18" fill="currentColor" font-size="12" font-weight="900" text-anchor="middle">F</text>'; break;
+      case 'summer': inner = '<rect x="6" y="8" width="4" height="12" fill="currentColor"/><rect x="12" y="4" width="6" height="16" fill="currentColor" opacity="0.8"/><rect x="20" y="10" width="4" height="10" fill="currentColor"/>'; break;
+      case 'hassan': inner = '<circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="2" fill="none"/><line x1="8" y1="14" x2="20" y2="14" stroke="currentColor" stroke-width="2"/><line x1="14" y1="8" x2="14" y2="20" stroke="currentColor" stroke-width="2"/>'; break;
+      case 'wasique': inner = '<path d="M3 8 L7 8 L10 16 L13 8 L17 8 L14 16 L7 16 Z" fill="currentColor"/>'; break;
+      case 'amal': inner = '<circle cx="14" cy="14" r="8" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 18 L12 12 L15 14 L20 8" stroke="currentColor" stroke-width="2" fill="none"/>'; break;
+      case 'techgear': inner = '<circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="14" cy="14" r="4" fill="currentColor"/><circle cx="14" cy="5" r="2" fill="currentColor"/><circle cx="14" cy="23" r="2" fill="currentColor"/><circle cx="5" cy="14" r="2" fill="currentColor"/><circle cx="23" cy="14" r="2" fill="currentColor"/>'; break;
+      case 'brightwash': inner = '<rect x="5" y="12" width="18" height="8" rx="2" fill="currentColor"/><rect x="7" y="8" width="10" height="5" rx="1" fill="currentColor" opacity="0.7"/><circle cx="8" cy="22" r="2.5" fill="currentColor"/><circle cx="20" cy="22" r="2.5" fill="currentColor"/>'; break;
+      case 'cleanwave': inner = '<circle cx="14" cy="12" r="8" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 12 L12 8 L16 14 L20 10" stroke="currentColor" stroke-width="1.5" fill="none"/>'; break;
+      case 'buildcore': inner = '<rect x="6" y="10" width="16" height="16" fill="currentColor" opacity="0.8"/><rect x="8" y="12" width="5" height="5" fill="white" opacity="0.5"/><rect x="15" y="12" width="5" height="5" fill="white" opacity="0.5"/><polygon points="4,12 14,4 24,12" fill="currentColor"/>'; break;
+      case 'structura': inner = '<rect x="5" y="8" width="5" height="16" fill="currentColor"/><rect x="11" y="4" width="6" height="20" fill="currentColor" opacity="0.8"/><rect x="18" y="6" width="5" height="18" fill="currentColor" opacity="0.9"/>'; break;
+      case 'marketpro': inner = '<path d="M6 18 L6 10 L10 14 L14 6 L18 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><polygon points="16,6 22,4 18,10" fill="currentColor"/>'; break;
+      case 'sparkclean': inner = '<circle cx="14" cy="12" r="7" stroke="currentColor" stroke-width="2"/><path d="M10 14 L14 8 L16 12 L12 16 Z" fill="currentColor" opacity="0.3"/>'; break;
+      case 'electrofix': inner = '<polygon points="16,2 8,14 14,14 12,26 20,12 15,12" fill="currentColor"/>'; break;
+      case 'flowpipe': inner = '<path d="M6 8 Q6 4 14 4 Q22 4 22 8 L22 16 Q22 20 14 20 Q6 20 6 16" stroke="currentColor" stroke-width="2" fill="none"/><rect x="5" y="16" width="3" height="5" rx="1" fill="currentColor"/><rect x="20" y="16" width="3" height="5" rx="1" fill="currentColor"/>'; break;
+      case 'colorcoat': inner = '<rect x="4" y="8" width="20" height="12" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><rect x="4" y="8" width="7" height="12" fill="currentColor" opacity="0.3"/><rect x="11" y="8" width="7" height="12" fill="currentColor" opacity="0.5"/><rect x="18" y="8" width="6" height="12" fill="currentColor" opacity="0.7"/>'; break;
+      case 'woodcraft': inner = '<line x1="6" y1="22" x2="22" y2="22" stroke="currentColor" stroke-width="2"/><line x1="6" y1="22" x2="14" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="4" x2="22" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'; break;
+      case 'airtech': inner = '<circle cx="14" cy="12" r="7" stroke="currentColor" stroke-width="2"/><path d="M8 8 Q10 4 14 8 Q18 12 20 8" stroke="currentColor" stroke-width="1.5" fill="none"/>'; break;
+      case 'greenscape': inner = '<path d="M14 24 L14 16" stroke="currentColor" stroke-width="2"/><path d="M14 16 Q8 10 4 14 Q10 8 14 12 Q18 8 24 14 Q20 10 14 16" fill="currentColor"/>'; break;
+      case 'shieldguard': inner = '<path d="M14 2 L24 8 L24 16 Q24 22 14 26 Q4 22 4 16 L4 8 Z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M10 14 L13 18 L18 10" stroke="currentColor" stroke-width="2" fill="none"/>'; break;
+      case 'datanet': inner = '<circle cx="14" cy="8" r="4" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="20" r="3" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="20" r="3" stroke="currentColor" stroke-width="2"/><line x1="10" y1="11" x2="8" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="18" y1="11" x2="20" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="9" y1="20" x2="19" y2="20" stroke="currentColor" stroke-width="1.5"/>'; break;
+      case 'swiftlogi': inner = '<rect x="4" y="12" width="20" height="9" rx="2" fill="currentColor"/><rect x="6" y="9" width="12" height="4" rx="1" fill="currentColor" opacity="0.6"/><circle cx="8" cy="23" r="2.5" fill="currentColor"/><circle cx="20" cy="23" r="2.5" fill="currentColor"/>'; break;
+      case 'pressprint': inner = '<rect x="6" y="8" width="16" height="12" rx="2" fill="currentColor"/><rect x="9" y="10" width="10" height="3" fill="white" opacity="0.5"/><rect x="9" y="15" width="10" height="3" fill="white" opacity="0.5"/><rect x="9" y="20" width="10" height="4" fill="currentColor" opacity="0.7"/>'; break;
+      case 'royalcater': inner = '<ellipse cx="14" cy="14" rx="10" ry="6" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 20 Q14 24 20 20" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 4 L14 10 M10 6 L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'; break;
+      case 'artspace': inner = '<circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="14" cy="14" r="6" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 2"/><path d="M14 5 L14 23 M5 14 L23 14" stroke="currentColor" stroke-width="1.5"/>'; break;
+      case 'proserve': inner = '<circle cx="14" cy="14" r="8" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/><line x1="10" y1="10" x2="18" y2="18" stroke="currentColor" stroke-width="2"/><line x1="10" y1="18" x2="18" y2="10" stroke="currentColor" stroke-width="2"/>'; break;
+    }
+    const svg = `<svg width="${svgSize}" height="${svgSize}" viewBox="0 0 28 28">${inner}</svg>`;
+    return `<div class="logo-opt${t === selectedType ? ' active' : ''}" onclick="selectType('${t}')">${svg}${LOGO_LABELS[t]}</div>`;
+  }).join('');
+  update();
+}
+
+function selectType(t) {
+  selectedType = t;
+  document.querySelectorAll('.logo-opt').forEach((el, i) => el.classList.toggle('active', LOGO_TYPES[i] === t));
+  color = LOGO_COLORS[t];
+  document.getElementById('logoColor').value = color;
+  document.getElementById('logoColorText').value = color.toUpperCase();
+  document.getElementById('englishName').value = LOGO_ENGS[t];
+  document.getElementById('arabicName').value = LOGO_ARBS[t];
+  update();
+}
+
+function syncColor(val) {
+  color = val;
+  document.getElementById('logoColor').value = val;
+  document.getElementById('logoColorText').value = val.toUpperCase();
+  update();
+}
+
+function syncStampColor(val) {
+  stampColor = val;
+  document.getElementById('stampColor').value = val;
+  document.getElementById('stampColorText').value = val.toUpperCase();
+}
+
+function setShowBody(mode) {
+  showBody = mode;
+  document.getElementById('modeBlank').classList.toggle('active', mode === 'blank');
+  document.getElementById('modeLined').classList.toggle('active', mode === 'lined');
+  update();
+}
+
+function handlePreview() {
+  const eng = document.getElementById('englishName').value.trim();
+  const arb = document.getElementById('arabicName').value.trim();
+  if (!eng) { document.getElementById('englishName').focus(); document.getElementById('englishName').style.borderColor = '#dc2626'; setTimeout(() => document.getElementById('englishName').style.borderColor = '', 1500); return; }
+  if (!arb) { document.getElementById('arabicName').focus(); document.getElementById('arabicName').style.borderColor = '#dc2626'; setTimeout(() => document.getElementById('arabicName').style.borderColor = '', 1500); return; }
+  update();
+  document.getElementById('previewPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function update() {
+  const eng = document.getElementById('englishName').value || 'YOUR COMPANY NAME';
+  const arb = document.getElementById('arabicName').value || 'اسم الشركة';
+  document.getElementById('logoContainer').innerHTML = renderLogo(selectedType, color, eng, arb);
+  document.getElementById('nocA4Page').style.transform = 'scale(' + zoom + ')';
+  document.getElementById('zoomLabel').textContent = Math.round(zoom * 100) + '%';
+  if (showBody === 'lined') {
+    document.getElementById('emptyLetterArea').style.background = 'repeating-linear-gradient(transparent, transparent 27px, #e2e8f0 27px, #e2e8f0 28px)';
+    document.getElementById('emptyLetterArea').style.paddingTop = '0';
+  } else {
+    document.getElementById('emptyLetterArea').style.background = 'none';
+    document.getElementById('emptyLetterArea').style.paddingTop = '0';
+  }
+  const sw = document.getElementById('stampWrapper');
+  const showStamp = document.getElementById('showStamp').checked;
+  if (showStamp) {
+    sw.style.display = 'block';
+    const signedBy = document.getElementById('signedBy').value || 'Authorized Signatory';
+    sw.innerHTML = renderStamp(eng, signedBy, stampColor);
+    if (stampDragX !== 0 || stampDragY !== 0) {
+      sw.style.transform = 'translate(' + stampDragX + 'px, ' + stampDragY + 'px)';
+    }
+    makeStampDraggable();
+  } else {
+    sw.style.display = 'none';
+  }
+}
+
+function zoomIn() { zoom = Math.min(1.3, zoom + 0.1); update(); }
+function zoomOut() { zoom = Math.max(0.4, zoom - 0.1); update(); }
+function resetZoom() { zoom = 0.8; update(); }
+
+function renderStamp(eng, signedBy, c) {
+  const clean = (eng || '').toUpperCase().replace(/[^\x20-\x7E]/g, '').trim().replace(/\s+/g, ' ');
+  const fs = clean.length > 40 ? '11px' : clean.length > 28 ? '13px' : clean.length > 18 ? '15px' : '17px';
+  return `<svg class="stamp-svg" viewBox="0 0 200 200" fill="none">
+    <defs><path id="stampRing" d="M 100,100 m -64,0 a 64,64 0 1,1 128,0 a 64,64 0 1,1 -128,0"/></defs>
+    <circle cx="100" cy="100" r="90" stroke="${c}" stroke-width="3.5" fill="none" opacity="0.85"/>
+    <circle cx="100" cy="100" r="82" stroke="${c}" stroke-width="1" stroke-dasharray="3 1.5" fill="none" opacity="0.85"/>
+    <text fill="${c}" font-size="${fs}" font-weight="900" font-family="sans-serif" letter-spacing="1px" opacity="0.85">
+      <textPath href="#stampRing" startOffset="50%" text-anchor="middle">${esc(clean)}</textPath>
+    </text>
+    <circle cx="100" cy="100" r="55" stroke="${c}" stroke-width="1.5" fill="none" opacity="0.85"/>
+    <circle cx="100" cy="100" r="50" stroke="${c}" stroke-width="1" fill="none" opacity="0.85"/>
+    <line x1="40" y1="72" x2="160" y2="72" stroke="${c}" stroke-width="1" opacity="0.5"/>
+    <text x="100" y="98" fill="${c}" font-size="20" font-weight="bold" text-anchor="middle" opacity="0.9">SIGNED</text>
+    <line x1="40" y1="118" x2="160" y2="118" stroke="${c}" stroke-width="1" opacity="0.5"/>
+    <text x="100" y="148" fill="${c}" font-size="14" font-weight="bold" text-anchor="middle" opacity="0.95">${esc(signedBy)}</text>
+  </svg>`;
+}
+
+function makeStampDraggable() {
+  const sw = document.getElementById('stampWrapper');
+  if (!sw || sw._dragInit) return;
+  sw._dragInit = true;
+  sw.addEventListener('mousedown', onStampMouseDown);
+  sw.addEventListener('touchstart', onStampTouchStart, { passive: false });
+}
+
+function onStampMouseDown(e) {
+  if (e.button !== 0) return;
+  const sw = document.getElementById('stampWrapper');
+  if (!sw) return;
+  e.preventDefault();
+  isDraggingStamp = true;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  dragOrigX = stampDragX;
+  dragOrigY = stampDragY;
+  sw.style.cursor = 'grabbing';
+  document.addEventListener('mousemove', onStampMouseMove);
+  document.addEventListener('mouseup', onStampMouseUp);
+}
+
+function onStampMouseMove(e) {
+  if (!isDraggingStamp) return;
+  const sw = document.getElementById('stampWrapper');
+  const dx = (e.clientX - dragStartX) / zoom;
+  const dy = (e.clientY - dragStartY) / zoom;
+  stampDragX = dragOrigX + dx;
+  stampDragY = dragOrigY + dy;
+  if (sw) sw.style.transform = 'translate(' + stampDragX + 'px, ' + stampDragY + 'px)';
+}
+
+function onStampMouseUp() {
+  if (!isDraggingStamp) return;
+  isDraggingStamp = false;
+  const sw = document.getElementById('stampWrapper');
+  if (sw) sw.style.cursor = 'move';
+  document.removeEventListener('mousemove', onStampMouseMove);
+  document.removeEventListener('mouseup', onStampMouseUp);
+}
+
+function onStampTouchStart(e) {
+  const sw = document.getElementById('stampWrapper');
+  if (!sw) return;
+  const touch = e.touches[0];
+  isDraggingStamp = true;
+  dragStartX = touch.clientX;
+  dragStartY = touch.clientY;
+  dragOrigX = stampDragX;
+  dragOrigY = stampDragY;
+  document.addEventListener('touchmove', onStampTouchMove, { passive: false });
+  document.addEventListener('touchend', onStampTouchEnd);
+}
+
+function onStampTouchMove(e) {
+  if (!isDraggingStamp) return;
+  e.preventDefault();
+  const sw = document.getElementById('stampWrapper');
+  const touch = e.touches[0];
+  const dx = (touch.clientX - dragStartX) / zoom;
+  const dy = (touch.clientY - dragStartY) / zoom;
+  stampDragX = dragOrigX + dx;
+  stampDragY = dragOrigY + dy;
+  if (sw) sw.style.transform = 'translate(' + stampDragX + 'px, ' + stampDragY + 'px)';
+}
+
+function onStampTouchEnd() {
+  if (!isDraggingStamp) return;
+  isDraggingStamp = false;
+  document.removeEventListener('touchmove', onStampTouchMove);
+  document.removeEventListener('touchend', onStampTouchEnd);
+}
+
+function handlePrint() { window.print(); }
+
+async function handleDownloadPdf() {
+  const element = document.getElementById('nocA4Page');
+  if (!element) return;
+  const btn = document.getElementById('downloadBtn');
+  const txt = document.getElementById('downloadBtnText');
+  btn.disabled = true;
+  txt.innerHTML = '<span class="spinner" style="display:inline-block;width:1rem;height:1rem;border-radius:50%;border:2px solid #e2e8f0;border-top-color:#fff;animation:spin 0.6s linear infinite"></span> Rendering...';
+
+  try {
+    const orig = element.style.cssText;
+    element.style.transform = 'none';
+    element.style.margin = '0';
+    element.style.position = 'relative';
+    element.style.left = '0';
+    element.style.top = '0';
+
+    const canvas = await html2canvas(element, {
+      scale: 3.5, useCORS: true, logging: false,
+      backgroundColor: '#ffffff', width: 794, height: 1123,
+      windowWidth: 794, windowHeight: 1123
+    });
+
+    element.style.cssText = orig;
+
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+    pdf.save('Letterpad_' + (document.getElementById('englishName').value || 'Company').replace(/[^a-zA-Z0-9]/g, '_') + '.pdf');
+  } catch (err) {
+    console.error(err);
+    alert('PDF export failed. Try Print instead.');
+  } finally {
+    btn.disabled = false;
+    txt.textContent = 'Download A4 PDF';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</body>
+</html>

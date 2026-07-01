@@ -8,8 +8,8 @@ const INITIAL_NOCS = [
     nationality: 'Pakistani', emiratesId: '784-2001-1882604-7', sponsorType: 'under my sponsorship',
     bodyTemplate: 'We witness RANA FOR MARKETING SERVICES VIA SOCIAL, Mr {employeeName} a {nationality} national holder of Emirates ID No is {emiratesId} under my sponsorship, and we have no objection to issuing him a work permit for any company in UAE according to the laws of United Arab Emirates.',
     closingText: 'Best Regards,', signoffCompany: 'RANA FOR MARKETING SERVICES VIA SOCIAL',
-    signoffCity: 'DUBAI \u2013 UAE', logoType: 'rana', logoColor: '#0c4ea3', stampPosition: 'center',
-    stampText: 'RANA FOR MARKETING SERVICES VIA SOCIAL'
+    signoffCity: 'DUBAI \u2013 UAE',     logoType: 'rana', logoColor: '#0c4ea3', stampPosition: 'center',
+    stampText: 'RANA FOR MARKETING SERVICES VIA SOCIAL', englishFont: 'Inter', stampOpacity: 0.85, stampFade: 'all'
   },
   {
     id: '2', name: 'FJM Technical', englishCompanyName: 'F J M Techincal Services',
@@ -20,8 +20,8 @@ const INITIAL_NOCS = [
     sponsorType: 'under my sponsorship',
     bodyTemplate: 'We witness F J M TECHINCAL SERVICES, Mr {employeeName} a {nationality} national holder of Emirates ID No is {emiratesId} under my sponsorship, and we have no objection to issuing him a work permit for any company in UAE according to the laws of United Arab Emirates.',
     closingText: 'Best Regards,', signoffCompany: 'F J M TECHINCAL SERVICES',
-    signoffCity: 'DUBAI \u2013 UAE', logoType: 'fjm', logoColor: '#c51b23', stampPosition: 'right',
-    stampText: 'F J M TECHINCAL SERVICES'
+    signoffCity: 'DUBAI \u2013 UAE',     logoType: 'fjm', logoColor: '#c51b23', stampPosition: 'right',
+    stampText: 'F J M TECHINCAL SERVICES', englishFont: 'Inter', stampOpacity: 0.85, stampFade: 'all'
   },
   {
     id: '3', name: 'Summer City', englishCompanyName: 'SUMMER CITY BUILDING CONTRACTING L.L.C',
@@ -32,8 +32,8 @@ const INITIAL_NOCS = [
     sponsorType: 'under my sponsorship',
     bodyTemplate: 'We witness SUMMER CITY BUILDING CONTRACTING L.L.C, Mr {employeeName} an {nationality} national holder of Emirates ID No is {emiratesId} under my sponsorship, and we have no objection to issuing him a work permit for any company in UAE according to the laws of United Arab Emirates.',
     closingText: 'Best Regards,', signoffCompany: 'SUMMER CITY BUILDING CONTRACTING L.L.C',
-    signoffCity: 'DUBAI \u2013 UAE', logoType: 'summer', logoColor: '#0a6395', stampPosition: 'right',
-    stampText: 'SUMMER CITY BUILDING CONTRACTING L.L.C'
+    signoffCity: 'DUBAI \u2013 UAE',     logoType: 'summer', logoColor: '#0a6395', stampPosition: 'right',
+    stampText: 'SUMMER CITY BUILDING CONTRACTING L.L.C', englishFont: 'Inter', stampOpacity: 0.85, stampFade: 'all'
   },
   {
     id: '4', name: 'Hassan Ishtiaq', englishCompanyName: 'Hassan Ishtiaq Techincal Services L.L.C',
@@ -44,8 +44,8 @@ const INITIAL_NOCS = [
     sponsorType: 'under my sponsorship',
     bodyTemplate: 'We witness HASSAN ISHTIAQ TECHINCAL SERVICES L.L.C, Mr {employeeName} a {nationality} national holder of Emirates ID No is {emiratesId} under my sponsorship, and we have no objection to issuing him a work permit for any company in UAE according to the laws of United Arab Emirates.',
     closingText: 'Best Regards,', signoffCompany: 'HASSAN ISHTIAQ TECHINCAL SERVICES L.L.C',
-    signoffCity: 'DUBAI \u2013 UAE', logoType: 'hassan', logoColor: '#0284c7', stampPosition: 'right',
-    stampText: 'HASSAN ISHTIAQ TECHINCAL SERVICES L.L.C'
+    signoffCity: 'DUBAI \u2013 UAE',     logoType: 'hassan', logoColor: '#0284c7', stampPosition: 'right',
+    stampText: 'HASSAN ISHTIAQ TECHINCAL SERVICES L.L.C', englishFont: 'Inter', stampOpacity: 0.85, stampFade: 'all'
   },
   {
     id: '5', name: 'Wasique Zahir', englishCompanyName: 'WASIQUE ZAHIR TECHNICAL WORKS L.L.C',
@@ -56,8 +56,8 @@ const INITIAL_NOCS = [
     emiratesId: '784-1995-6924737-4', sponsorType: 'under my sponsorship',
     bodyTemplate: 'We witness WASIQUE ZAHIR TECHINCAL WORKS L.L.C, Mr {employeeName} a {nationality} national holder of Emirates ID No is {emiratesId} under my sponsorship, and we have no objection to issuing him a work permit for any company in UAE according to the laws of United Arab Emirates.',
     closingText: 'Best Regards,', signoffCompany: 'WASIQUE ZAHIR TECHINCAL WORKS L.L.C',
-    signoffCity: 'DUBAI \u2013 UAE', logoType: 'wasique', logoColor: '#086da3', stampPosition: 'right',
-    stampText: 'WASIQUE ZAHIR TECHNICAL WORKS L.L.C'
+    signoffCity: 'DUBAI \u2013 UAE',     logoType: 'wasique', logoColor: '#086da3', stampPosition: 'right',
+    stampText: 'WASIQUE ZAHIR TECHNICAL WORKS L.L.C', englishFont: 'Inter', stampOpacity: 0.85, stampFade: 'all'
   },
   {
     id: '6', name: 'Amal Jannat', englishCompanyName: 'AMAL JANNAT TECHNICAL SERVICES EST.',
@@ -68,8 +68,8 @@ const INITIAL_NOCS = [
     emiratesId: '20020110417800', sponsorType: 'under my sponsorship',
     bodyTemplate: 'We witness AMAL JANNAT TECHNICAL SERVICES EST, Mr {employeeName} a {nationality} national holder of Emirates ID No is {emiratesId} under my sponsorship, and we have no objection to issuing him a work permit for any company in UAE according to the laws of United Arab Emirates.',
     closingText: 'Best Regards,', signoffCompany: 'AMAL JANNAT TECHNICAL SERVICES EST',
-    signoffCity: 'DUBAI \u2013 UAE', logoType: 'amal', logoColor: '#cc2128', stampPosition: 'center',
-    stampText: 'AMAL JANNAT TECHNICAL SERVICES EST.'
+    signoffCity: 'DUBAI \u2013 UAE',     logoType: 'amal', logoColor: '#cc2128', stampPosition: 'center',
+    stampText: 'AMAL JANNAT TECHNICAL SERVICES EST.', englishFont: 'Inter', stampOpacity: 0.85, stampFade: 'all'
   }
 ];
 
@@ -84,14 +84,17 @@ let showMargins = false;
 let activeTab = 'details';
 let isGeneratingPdf = false;
 let stampDragX = 0, stampDragY = 0;
+let watermarkDragX = 0, watermarkDragY = 0;
 let isDragging = false;
+let isDraggingWatermark = false;
 let dragStartX = 0, dragStartY = 0, dragOrigX = 0, dragOrigY = 0;
 
 // ========== SVG LOGOS ==========
-function renderLogo(type, color, englishTitle, arabicTitle) {
+function renderLogo(type, color, englishTitle, arabicTitle, englishFont) {
   const c = color || '#0F172A';
   const eng = englishTitle || '';
   const arb = arabicTitle || '';
+  const ff = englishFont || 'Inter';
   switch (type) {
     case 'rana': return `
       <div class="logo-container">
@@ -108,7 +111,7 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
           <text x="50" y="70" fill="white" font-size="6" font-weight="bold" text-anchor="middle">✉</text>
         </svg>
         <div class="logo-texts">
-          <div class="logo-english" style="color:${c}">${escHtml(eng || 'RANA For Marketing Services Via Social')}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng || 'RANA For Marketing Services Via Social')}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb || 'ران الخدمات التسويق عبر مواقع التواصل')}</div>
         </div>
       </div>`;
@@ -123,7 +126,7 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
           <span style="font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:-4px;color:${c}">TECHNICAL SERVICES</span>
         </div>
         <div style="border-left:2px solid #fecaca;padding-left:1rem;min-width:0">
-          <div class="logo-english" style="color:${c}">${escHtml(eng || 'F J M Technical Services')}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng || 'F J M Technical Services')}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb || 'اف جيه ام للخدمات الفنية')}</div>
         </div>
       </div>`;
@@ -139,7 +142,7 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
           <text x="50" y="80" fill="white" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="4">SC</text>
         </svg>
         <div class="logo-texts">
-          <div class="logo-english" style="color:${c}">${escHtml(eng || 'SUMMER CITY BUILDING CONTRACTING L.L.C')}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng || 'SUMMER CITY BUILDING CONTRACTING L.L.C')}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb || 'سمر سيتي لمقات البناء ش.ذ.م.م')}</div>
         </div>
       </div>`;
@@ -159,7 +162,7 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
           <text x="50" y="54" fill="white" font-size="12" font-weight="bold" text-anchor="middle">HI</text>
         </svg>
         <div class="logo-texts">
-          <div class="logo-english" style="color:${c}">${escHtml(eng || 'Hassan Ishtiaq Technical Services L.L.C')}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng || 'Hassan Ishtiaq Technical Services L.L.C')}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb || 'حسن اشتياق للخدمات الفنية ذ.م.م')}</div>
         </div>
       </div>`;
@@ -172,7 +175,7 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
           <path d="M25 15 L45 42 L65 42 L85 15" stroke="#f1f5f9" stroke-width="2"/>
         </svg>
         <div class="logo-texts">
-          <div class="logo-english" style="color:${c}">${escHtml(eng || 'WASIQUE ZAHIR TECHNICAL WORKS L.L.C')}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng || 'WASIQUE ZAHIR TECHNICAL WORKS L.L.C')}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb || 'واثق زهير للاعمال الفنية ش.ذ.م.م')}</div>
         </div>
       </div>`;
@@ -185,7 +188,7 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
           <path d="M60 38 H75 V53" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <div class="logo-texts">
-          <div class="logo-english" style="color:${c}">${escHtml(eng || 'AMAL JANNAT TECHNICAL SERVICES EST.')}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng || 'AMAL JANNAT TECHNICAL SERVICES EST.')}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb || 'مؤسسة امل جنات للخدمات الفنية')}</div>
         </div>
       </div>`;
@@ -196,37 +199,62 @@ function renderLogo(type, color, englishTitle, arabicTitle) {
       return `<div class="logo-container">
         <svg class="logo-svg" width="64" height="64" viewBox="0 0 100 100" fill="none">${inner}</svg>
         <div class="logo-texts">
-          <div class="logo-english" style="color:${c}">${escHtml(eng)}</div>
+          <div class="logo-english" style="color:${c};font-family:${ff}">${escHtml(eng)}</div>
           <div class="logo-arabic" style="color:${c}">${escHtml(arb)}</div>
         </div>
       </div>`;
   }
 }
 
-function renderStamp(type, text) {
+function renderStamp(type, text, opacity, fade) {
   const sc = '#1e3a8a';
+  const op = opacity != null ? opacity : 0.85;
+  const fd = fade || 'all';
   const clean = (text || '').replace(/[^\x20-\x7E]/g, '').trim().replace(/\s+/g, ' ').toUpperCase();
   const len = clean.length;
   const fs = len > 40 ? '12px' : len > 28 ? '13.5px' : len > 18 ? '15.5px' : '17.5px';
   const short = clean.length > 20 ? clean.substring(0, 18) + '..' : clean;
   let inner = '';
   switch (type) {
-    case 'rana': inner = `<circle cx="100" cy="100" r="16" stroke="${sc}" stroke-width="2" stroke-dasharray="4 2"/><path d="M 100 80 L 100 120 M 80 100 L 120 100" stroke="${sc}" stroke-width="2"/><rect x="91" y="91" width="18" height="18" stroke="${sc}" stroke-width="1.5" rx="3" fill="transparent"/><text x="100" y="132" fill="${sc}" font-size="9px" font-weight="bold" text-anchor="middle">DUBAI - UAE</text><text x="100" y="144" fill="${sc}" font-size="8px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
-    case 'fjm': inner = `<rect x="82" y="88" width="36" height="24" stroke="${sc}" stroke-width="2" rx="4"/><text x="100" y="104" fill="${sc}" font-size="14px" font-weight="black" text-anchor="middle">FJM</text><text x="100" y="132" fill="${sc}" font-size="10px" font-weight="bold" text-anchor="middle">DUBAI</text><text x="100" y="144" fill="${sc}" font-size="8px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
-    case 'summer': inner = `<path d="M 90 85 L 100 70 L 110 85 h-6 v20 h-8 v-20 Z" fill="none" stroke="${sc}" stroke-width="2"/><text x="100" y="118" fill="${sc}" font-size="10px" font-weight="bold" text-anchor="middle">EST. 2023</text><text x="100" y="132" fill="${sc}" font-size="10px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
-    case 'hassan': inner = `<text x="100" y="94" fill="${sc}" font-size="11px" font-weight="bold" text-anchor="middle">H.I. TECH</text><text x="100" y="112" fill="${sc}" font-size="11px" font-weight="extrabold" text-anchor="middle">DUBAI \u2022 U.A.E</text><text x="100" y="130" fill="${sc}" font-size="8px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
-    case 'wasique': inner = `<circle cx="100" cy="100" r="14" stroke="${sc}" stroke-width="1.5"/><text x="100" y="104" fill="${sc}" font-size="12px" font-weight="black" text-anchor="middle">VZ</text><text x="100" y="128" fill="${sc}" font-size="10px" font-weight="extrabold" text-anchor="middle">DUBAI, UAE</text><text x="100" y="140" fill="${sc}" font-size="8px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
-    case 'amal': inner = `<path d="M 85 90 L 100 110 L 115 90" stroke="${sc}" stroke-width="2" stroke-linecap="round"/><path d="M 85 102 L 100 82 L 115 102" stroke="${sc}" stroke-width="2" stroke-linecap="round"/><text x="100" y="124" fill="${sc}" font-size="9px" font-weight="bold" text-anchor="middle">EST. 2023</text><text x="100" y="136" fill="${sc}" font-size="9px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
-    default: inner = `<circle cx="100" cy="100" r="14" stroke="${sc}" stroke-width="2"/><text x="100" y="104" fill="${sc}" font-size="10px" font-weight="bold" text-anchor="middle">LOGO</text><text x="100" y="128" fill="${sc}" font-size="9px" font-weight="bold" text-anchor="middle">DUBAI, UAE</text><text x="100" y="140" fill="${sc}" font-size="8px" font-weight="bold" text-anchor="middle">${escHtml(short)}</text>`; break;
+    case 'rana': inner = `<g transform="translate(100,100)"><circle cx="0" cy="0" r="16" stroke="${sc}" stroke-width="2" stroke-dasharray="4 2"/><path d="M 0 -20 L 0 20 M -20 0 L 20 0" stroke="${sc}" stroke-width="2"/><rect x="-9" y="-9" width="18" height="18" stroke="${sc}" stroke-width="1.5" rx="3" fill="transparent"/></g>`; break;
+    case 'fjm': inner = `<rect x="82" y="85" width="36" height="30" stroke="${sc}" stroke-width="2" rx="4"/><text x="100" y="105" fill="${sc}" font-size="16px" font-weight="900" font-style="italic" text-anchor="middle">FJM</text>`; break;
+    case 'summer': inner = `<g transform="translate(100,95)"><path d="M -10 -15 L 0 -30 L 10 -15 h-6 v20 h-8 v-20 Z" fill="none" stroke="${sc}" stroke-width="2"/><rect x="-24" y="2" width="48" height="14" fill="${sc}" rx="2"/><text x="0" y="13" fill="white" font-size="9px" font-weight="bold" text-anchor="middle" letter-spacing="3">SC</text></g>`; break;
+    case 'hassan': inner = `<circle cx="100" cy="100" r="18" stroke="${sc}" stroke-width="2" fill="none"/><text x="100" y="105" fill="${sc}" font-size="14px" font-weight="900" text-anchor="middle">HI</text>`; break;
+    case 'wasique': inner = `<circle cx="100" cy="100" r="16" stroke="${sc}" stroke-width="1.5"/><g transform="translate(100,100)"><path d="M -25 -20 L -10 -20 L 0 5 L 10 -20 L 25 -20" stroke="${sc}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M -15 15 L 15 15" stroke="${sc}" stroke-width="2" stroke-linecap="round"/></g>`; break;
+    case 'amal': inner = `<g transform="translate(100,100)"><path d="M -15 -10 L 0 10 L 15 -10" stroke="${sc}" stroke-width="2" stroke-linecap="round"/><path d="M -15 2 L 0 -18 L 15 2" stroke="${sc}" stroke-width="2" stroke-linecap="round"/></g>`; break;
+    default: var thumbRaw = getLogoSvgThumb(type, sc); var thumbInner = thumbRaw ? thumbRaw.replace(/<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '') : ''; inner = `<g transform="translate(65,65) scale(0.7)">${thumbInner}</g>`; break;
   }
   return `<svg class="stamp-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs><path id="stampRing" d="M 100, 100 m -64, 0 a 64,64 0 1,1 128,0 a 64,64 0 1,1 -128,0"/></defs>
-    <circle cx="100" cy="100" r="90" stroke="${sc}" stroke-width="3.5" fill="none"/>
-    <circle cx="100" cy="100" r="82" stroke="${sc}" stroke-width="1" stroke-dasharray="3 1.5" fill="none"/>
-    <text fill="${sc}" font-size="${fs}" font-weight="900" font-family="sans-serif" letter-spacing="1px"><textPath href="#stampRing" startOffset="50%" text-anchor="middle">${escHtml(clean)}</textPath></text>
-    <circle cx="100" cy="100" r="52" stroke="${sc}" stroke-width="1.5" fill="none"/>
-    <circle cx="100" cy="100" r="47" stroke="${sc}" stroke-width="1" fill="none"/>
-    ${inner}
+    <defs>
+      <path id="stampRing" d="M 100, 100 m -64, 0 a 64,64 0 1,1 128,0 a 64,64 0 1,1 -128,0"/>
+      <!-- Edge fade gradients -->
+      <linearGradient id="fadeTop" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="white" stop-opacity="1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="fadeBottom" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="white" stop-opacity="0"/>
+        <stop offset="100%" stop-color="white" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="fadeLeft" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="white" stop-opacity="1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="fadeRight" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="white" stop-opacity="0"/>
+        <stop offset="100%" stop-color="white" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
+    <g>
+      <circle cx="100" cy="100" r="90" stroke="${sc}" stroke-width="3.5" fill="none"/>
+      <circle cx="100" cy="100" r="82" stroke="${sc}" stroke-width="1" stroke-dasharray="3 1.5" fill="none"/>
+      <text fill="${sc}" font-size="${fs}" font-weight="900" font-family="sans-serif" letter-spacing="1px"><textPath href="#stampRing" startOffset="50%" text-anchor="middle">${escHtml(clean)}</textPath></text>
+      <circle cx="100" cy="100" r="52" stroke="${sc}" stroke-width="1.5" fill="none"/>
+      <circle cx="100" cy="100" r="47" stroke="${sc}" stroke-width="1" fill="none"/>
+      ${inner}
+    </g>
+    ${fd === 'all' || fd === 'top-bottom' ? `<g opacity="${op}"><rect x="0" y="0" width="200" height="22" fill="url(#fadeTop)"/><rect x="0" y="178" width="200" height="22" fill="url(#fadeBottom)"/></g>` : ''}
+    ${fd === 'all' || fd === 'left-right' ? `<g opacity="${op}"><rect x="0" y="0" width="22" height="200" fill="url(#fadeLeft)"/><rect x="178" y="0" width="22" height="200" fill="url(#fadeRight)"/></g>` : ''}
   </svg>`;
 }
 
@@ -270,7 +298,7 @@ function getDisplayBodyText() {
 function updatePreview() {
   const eng = getDisplaySignoffCompany();
   const arb = editedNoc.arabicCompanyName;
-  document.getElementById('logoContainer').innerHTML = renderLogo(editedNoc.logoType, editedNoc.logoColor, eng, arb);
+  document.getElementById('logoContainer').innerHTML = renderLogo(editedNoc.logoType, editedNoc.logoColor, eng, arb, editedNoc.englishFont);
   document.getElementById('docDate').textContent = 'Date: ' + editedNoc.date;
   document.getElementById('previewAddresseeTitle').textContent = getDisplayAddresseeTitle();
   document.getElementById('previewAddresseeCity').textContent = editedNoc.addresseeCityCountry;
@@ -283,7 +311,7 @@ function updatePreview() {
   // Stamp
   const sc = document.getElementById('stampContainer');
   if (showStamp) {
-    sc.innerHTML = renderStamp(editedNoc.logoType, getDisplaySignoffCompany());
+    sc.innerHTML = renderStamp(editedNoc.logoType, getDisplaySignoffCompany(), editedNoc.stampOpacity, editedNoc.stampFade);
     sc.className = 'stamp-container draggable-stamp ' + (editedNoc.stampPosition === 'center' ? 'pos-center' : 'pos-right');
     if (stampDragX !== 0 || stampDragY !== 0) {
       sc.style.transform = 'translate(' + stampDragX + 'px, ' + stampDragY + 'px)';
@@ -293,6 +321,17 @@ function updatePreview() {
   } else {
     sc.innerHTML = '';
     sc.className = 'stamp-container';
+  }
+
+  // Watermark
+  const wm = document.getElementById('watermarkLogo');
+  if (wm) {
+    wm.innerHTML = getLogoSvgThumb(editedNoc.logoType, editedNoc.logoColor);
+    if (watermarkDragX !== 0 || watermarkDragY !== 0) {
+      wm.style.transform = 'translate(-50%, -50%) translate(' + watermarkDragX + 'px, ' + watermarkDragY + 'px)';
+    } else {
+      wm.style.transform = '';
+    }
   }
 
   // Margins
@@ -313,6 +352,10 @@ function updateField(key, value) {
     document.getElementById('logoColor').value = value;
     document.getElementById('logoColorText').value = value;
   }
+  if (key === 'stampOpacity') {
+    document.getElementById('stampOpacityLabel').textContent = value.toFixed(2);
+  }
+
 }
 
 function generatePreview() {
@@ -396,6 +439,84 @@ function onStampTouchEnd() {
   document.removeEventListener('touchend', onStampTouchEnd);
 }
 
+// ========== WATERMARK DRAG ==========
+let watermarkDragInitialized = false;
+
+function initWatermarkDrag() {
+  if (watermarkDragInitialized) return;
+  const wm = document.getElementById('watermarkLogo');
+  if (!wm) return;
+  watermarkDragInitialized = true;
+  wm.addEventListener('mousedown', onWatermarkMouseDown);
+  wm.addEventListener('touchstart', onWatermarkTouchStart, { passive: false });
+}
+
+function onWatermarkMouseDown(e) {
+  if (e.button !== 0) return;
+  const wm = document.getElementById('watermarkLogo');
+  if (!wm) return;
+  e.preventDefault();
+  isDraggingWatermark = true;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  dragOrigX = watermarkDragX;
+  dragOrigY = watermarkDragY;
+  wm.style.cursor = 'grabbing';
+  document.addEventListener('mousemove', onWatermarkMouseMove);
+  document.addEventListener('mouseup', onWatermarkMouseUp);
+}
+
+function onWatermarkMouseMove(e) {
+  if (!isDraggingWatermark) return;
+  const dx = (e.clientX - dragStartX) / zoomScale;
+  const dy = (e.clientY - dragStartY) / zoomScale;
+  watermarkDragX = dragOrigX + dx;
+  watermarkDragY = dragOrigY + dy;
+  const wm = document.getElementById('watermarkLogo');
+  if (wm) wm.style.transform = 'translate(-50%, -50%) translate(' + watermarkDragX + 'px, ' + watermarkDragY + 'px)';
+}
+
+function onWatermarkMouseUp() {
+  if (!isDraggingWatermark) return;
+  isDraggingWatermark = false;
+  const wm = document.getElementById('watermarkLogo');
+  if (wm) wm.style.cursor = '';
+  document.removeEventListener('mousemove', onWatermarkMouseMove);
+  document.removeEventListener('mouseup', onWatermarkMouseUp);
+}
+
+function onWatermarkTouchStart(e) {
+  const wm = document.getElementById('watermarkLogo');
+  if (!wm) return;
+  const touch = e.touches[0];
+  isDraggingWatermark = true;
+  dragStartX = touch.clientX;
+  dragStartY = touch.clientY;
+  dragOrigX = watermarkDragX;
+  dragOrigY = watermarkDragY;
+  document.addEventListener('touchmove', onWatermarkTouchMove, { passive: false });
+  document.addEventListener('touchend', onWatermarkTouchEnd);
+}
+
+function onWatermarkTouchMove(e) {
+  if (!isDraggingWatermark) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  const dx = (touch.clientX - dragStartX) / zoomScale;
+  const dy = (touch.clientY - dragStartY) / zoomScale;
+  watermarkDragX = dragOrigX + dx;
+  watermarkDragY = dragOrigY + dy;
+  const wm = document.getElementById('watermarkLogo');
+  if (wm) wm.style.transform = 'translate(-50%, -50%) translate(' + watermarkDragX + 'px, ' + watermarkDragY + 'px)';
+}
+
+function onWatermarkTouchEnd() {
+  if (!isDraggingWatermark) return;
+  isDraggingWatermark = false;
+  document.removeEventListener('touchmove', onWatermarkTouchMove);
+  document.removeEventListener('touchend', onWatermarkTouchEnd);
+}
+
 function switchTab(tab) {
   activeTab = tab;
   document.getElementById('tabDetails').className = 'tab-btn' + (tab === 'details' ? ' active' : '');
@@ -441,10 +562,17 @@ function syncFormFields() {
   document.getElementById('closingText').value = editedNoc.closingText;
   document.getElementById('signoffCompany').value = editedNoc.signoffCompany;
   document.getElementById('englishCompanyName').value = editedNoc.englishCompanyName;
+  document.getElementById('englishFont').value = editedNoc.englishFont || 'Inter';
   document.getElementById('arabicCompanyName').value = editedNoc.arabicCompanyName;
   document.getElementById('logoColor').value = editedNoc.logoColor;
   document.getElementById('logoColorText').value = editedNoc.logoColor;
   document.getElementById('stampText').value = editedNoc.stampText.toUpperCase();
+  const soEl = document.getElementById('stampOpacity');
+  if (soEl) { soEl.value = editedNoc.stampOpacity || 0.85; document.getElementById('stampOpacityLabel').textContent = (editedNoc.stampOpacity || 0.85).toFixed(2); }
+  const fd = editedNoc.stampFade || 'all';
+  document.getElementById('fadeAll').className = 'seg-btn' + (fd === 'all' ? ' active' : '');
+  document.getElementById('fadeTB').className = 'seg-btn' + (fd === 'top-bottom' ? ' active' : '');
+  document.getElementById('fadeLR').className = 'seg-btn' + (fd === 'left-right' ? ' active' : '');
   // Stamp position buttons
   document.getElementById('posCenter').className = 'seg-btn' + (editedNoc.stampPosition === 'center' ? ' active' : '');
   document.getElementById('posRight').className = 'seg-btn' + (editedNoc.stampPosition === 'right' ? ' active' : '');
@@ -484,6 +612,14 @@ function setStampPosition(pos) {
   updatePreview();
 }
 
+function setStampFade(dir) {
+  editedNoc.stampFade = dir;
+  document.getElementById('fadeAll').className = 'seg-btn' + (dir === 'all' ? ' active' : '');
+  document.getElementById('fadeTB').className = 'seg-btn' + (dir === 'top-bottom' ? ' active' : '');
+  document.getElementById('fadeLR').className = 'seg-btn' + (dir === 'left-right' ? ' active' : '');
+  updatePreview();
+}
+
 function zoomIn() { zoomScale = Math.min(1.2, zoomScale + 0.1); updatePreview(); }
 function zoomOut() { zoomScale = Math.max(0.4, zoomScale - 0.1); updatePreview(); }
 function resetZoom() { zoomScale = 0.7; updatePreview(); }
@@ -520,16 +656,16 @@ async function handleDownloadPdf() {
 
     const canvas = await html2canvas(element, {
       scale: 3.5, useCORS: true, logging: false,
-      backgroundColor: '#ffffff', width: 794, height: 1123,
-      windowWidth: 794, windowHeight: 1123
+      backgroundColor: '#ffffff', width: 816, height: 1056,
+      windowWidth: 816, windowHeight: 1056
     });
 
     element.style.cssText = originalStyle;
 
     const imgData = canvas.toDataURL('image/jpeg', 1.0);
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+    pdf.addImage(imgData, 'JPEG', 0, 0, 216, 279, undefined, 'FAST');
     const safeName = editedNoc.englishCompanyName.replace(/[^a-zA-Z0-9]/g, '_');
     pdf.save('NOC_' + safeName + '.pdf');
   } catch (err) {
@@ -548,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
   syncFormFields();
   updatePreview();
   initStampDrag();
+  initWatermarkDrag();
   initLogoPicker();
 });
 
@@ -661,6 +798,12 @@ const LOGO_CATALOG = [
 function getLogoSvgThumb(id, color) {
   const c = color || '#0f172a';
   const thumbs = {
+    rana: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="38" stroke="${c}" stroke-width="5" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="30" fill="#f8fafc" stroke="${c}" stroke-width="2"/><path d="M50 32 L50 68 M32 50 L68 50 M37 37 L63 63 M37 63 L63 37" stroke="${c}" stroke-width="1.5" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="${c}"/><circle cx="50" cy="32" r="6" fill="${c}"/><circle cx="50" cy="68" r="6" fill="${c}"/><circle cx="32" cy="50" r="6" fill="${c}"/><circle cx="68" cy="50" r="6" fill="${c}"/><text x="50" y="35" fill="white" font-size="8" font-weight="bold" text-anchor="middle">in</text><text x="32" y="52" fill="white" font-size="7" font-weight="bold" text-anchor="middle">f</text><text x="68" y="52" fill="white" font-size="6" font-weight="bold" text-anchor="middle">t</text><text x="50" y="70" fill="white" font-size="6" font-weight="bold" text-anchor="middle">✉</text></svg>`,
+    fjm: `<svg viewBox="0 0 120 60" fill="none"><circle cx="28" cy="22" r="12" stroke="${c}" stroke-width="3"/><path d="M28 10 L28 14 M28 30 L28 34 M18 22 L22 22 M34 22 L38 22 M21 15 L24 18 M35 29 L32 26 M21 29 L24 26 M35 15 L32 18" stroke="${c}" stroke-width="3" stroke-linecap="round"/><text x="25" y="48" fill="${c}" font-size="28" font-weight="900" font-style="italic" letter-spacing="1">FJM</text></svg>`,
+    summer: `<svg viewBox="0 0 100 100" fill="none"><rect x="25" y="40" width="12" height="42" fill="${c}"/><rect x="42" y="22" width="16" height="60" fill="${c}" opacity="0.8"/><rect x="63" y="32" width="12" height="50" fill="${c}" opacity="0.9"/><line x1="50" y1="22" x2="50" y2="10" stroke="${c}" stroke-width="2"/><line x1="31" y1="40" x2="31" y2="32" stroke="${c}" stroke-width="2"/><rect x="15" y="68" width="70" height="16" fill="${c}" rx="3"/><text x="50" y="80" fill="white" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="4">SC</text></svg>`,
+    hassan: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="34" stroke="${c}" stroke-width="5"/><circle cx="50" cy="50" r="26" stroke="${c}" stroke-width="1" stroke-dasharray="3 3"/><rect x="46" y="8" width="8" height="10" fill="${c}" rx="2"/><rect x="46" y="82" width="8" height="10" fill="${c}" rx="2"/><rect x="8" y="46" width="10" height="8" fill="${c}" rx="2"/><rect x="82" y="46" width="10" height="8" fill="${c}" rx="2"/><line x1="35" y1="50" x2="65" y2="50" stroke="${c}" stroke-width="3"/><line x1="50" y1="35" x2="50" y2="65" stroke="${c}" stroke-width="3"/><circle cx="35" cy="50" r="5" fill="${c}"/><circle cx="65" cy="50" r="5" fill="${c}"/><circle cx="50" cy="35" r="5" fill="${c}"/><circle cx="50" cy="65" r="5" fill="${c}"/><text x="50" y="54" fill="white" font-size="12" font-weight="bold" text-anchor="middle">HI</text></svg>`,
+    wasique: `<svg viewBox="0 0 100 70" fill="none"><path d="M10 15 L35 15 L50 45 L65 15 L90 15" stroke="${c}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 45 L75 45" stroke="${c}" stroke-width="5" stroke-linecap="round"/><path d="M40 55 L60 55" stroke="${c}" stroke-width="3" stroke-linecap="round"/><path d="M25 15 L45 42 L65 42 L85 15" stroke="#f1f5f9" stroke-width="2"/></svg>`,
+    amal: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="30" stroke="${c}" stroke-width="6"/>${[0,45,90,135,180,225,270,315].map(a => `<g transform="rotate(${a} 50 50)"><rect x="46" y="10" width="8" height="12" fill="${c}" rx="1"/></g>`).join('')}<path d="M30 65 L45 50 L55 58 L72 38" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 38 H75 V53" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
     shield: `<svg viewBox="0 0 100 100" fill="none"><path d="M50 8 L85 25 V55 C85 75 68 90 50 95 C32 90 15 75 15 55 V25 Z" stroke="${c}" stroke-width="4" fill="${c}11"/><path d="M50 25 L70 35 V55 C70 68 60 78 50 82 C40 78 30 68 30 55 V35 Z" stroke="${c}" stroke-width="2"/><text x="50" y="58" fill="${c}" font-size="20" font-weight="900" text-anchor="middle" font-family="Inter,sans-serif">S</text></svg>`,
     diamond: `<svg viewBox="0 0 100 100" fill="none"><polygon points="50,5 95,50 50,95 5,50" stroke="${c}" stroke-width="4" fill="${c}11"/><polygon points="50,20 80,50 50,80 20,50" stroke="${c}" stroke-width="2"/><text x="50" y="56" fill="${c}" font-size="22" font-weight="900" text-anchor="middle" font-family="Inter,sans-serif">D</text></svg>`,
     hexagon: `<svg viewBox="0 0 100 100" fill="none"><polygon points="50,5 90,27 90,73 50,95 10,73 10,27" stroke="${c}" stroke-width="4" fill="${c}11"/><polygon points="50,20 75,33 75,67 50,80 25,67 25,33" stroke="${c}" stroke-width="2"/><text x="50" y="56" fill="${c}" font-size="20" font-weight="900" text-anchor="middle" font-family="Inter,sans-serif">H</text></svg>`,
